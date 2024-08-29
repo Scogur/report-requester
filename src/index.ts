@@ -1,18 +1,16 @@
 import express, { json, Request, Response } from 'express';
 
 const app = express();
-const port = process.env.PORT || 3000;
-
-let request: RequestInfo = new Request('http://localhost:3000/rep?docId=2342', {
-    method: 'GET',
-  });
+const port = process.env.PORT || 2000;
 
 
-let preq: RequestInfo = new Request('http://localhost:3000/rep', {
+startServer(app);
+
+let preq: RequestInfo = new Request(`http://localhost:3000/rep`, {
     method: 'POST',
     body: JSON.stringify({
         name: 'Nick',
-        tablename: 'table1',
+        tablename: 'report',
         tableheads: ['name', 'occupation'],
     }),
     headers: {
@@ -20,21 +18,23 @@ let preq: RequestInfo = new Request('http://localhost:3000/rep', {
     },
   });
 
-let report = getReport(preq);
-console.log(report);
 
-/*
-app.get('/', (req: Request, res: Response) => {
-  const message = 'Hello, World!';
-  res.status(200).json({ message });
-});
 
-app.listen(port, () => {
-    console.log(`Server is running at  http://localhost:${port}`);
+
+function startServer(_app : express.Application){
+  _app.get('/', (req: Request, res: Response) => {
+    let report = getReport(preq);
+    console.log(report);
+    res.status(200).json(report);
   });
-*/
+  
+  _app.listen(port, () => {
+      console.log(`Server is running at  http://localhost:2000/`);
+    });
+}
+
 function getReport(req: RequestInfo) {
-    fetch(req)
+    return fetch(req)
     .then(response => response.json())
     .then(data => console.log(data));
     /*return fetch('http://localhost:3000/')
