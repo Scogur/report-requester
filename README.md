@@ -4,8 +4,8 @@
 <p align="center">
   <a>TS + Express</a>
 </p>
-  ## Example request 
-  ```bash
+## Example request 
+```bash
   http://localhost:2000/?th=[%22name%22,%22occupation%22]
-  ```
-
+```
+  
