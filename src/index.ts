@@ -6,26 +6,16 @@ const port = process.env.PORT || 2000;
 
 startServer(app);
 
-let preq: RequestInfo = new Request(`http://localhost:3000/rep`, {
-    method: 'POST',
-    body: JSON.stringify({
-        name: 'Nick',
-        tablename: 'report',
-        tableheads: ['name', 'occupation'],
-    }),
-    headers: {
-        'Content-Type': 'application/json',
-    },
-  });
-
-
+//getReport(getRequest());
 
 
 function startServer(_app : express.Application){
-  _app.get('/', (req: Request, res: Response) => {
-    let report = getReport(preq);
-    console.log(report);
-    res.status(200).json(report);
+  _app.get('/', async (req: Request, res: Response) => {
+    let report = await getReport(getRequest())
+    //console.log(report);
+    //res.sendFile(report);
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.send(Buffer.from(report));
   });
   
   _app.listen(port, () => {
@@ -33,17 +23,33 @@ function startServer(_app : express.Application){
     });
 }
 
-function getReport(req: RequestInfo) {
-    return fetch(req)
-    .then(response => response.json())
-    .then(data => console.log(data));
-    /*return fetch('http://localhost:3000/')
-     .then(response => response.json())
-     .then(data => console.log(data))
-     .catch(error => console.error('Error:', error));*/
+async function getReport(req: RequestInfo){
+  //let data: string | undefined;
+  let data;
+  //let blob;
+  await fetch(req)
+  .then(response => response.arrayBuffer())
+  .then(res => {
+    data = res as ArrayBuffer;
+  });
+
+
+  return data as unknown as ArrayBuffer;
 }
 
 
-interface Report {
-    message: string;
+
+
+function getRequest(){
+  return new Request(`http://localhost:3000/rep`, {
+    method: 'POST',
+    body: JSON.stringify({
+        name: 'Nick',
+        tablename: 'report',
+        tableheads: ['name', 'occupation', 'phonenumber'],
+    }),
+    headers: {
+        'Content-Type': 'application/json',
+    },
+  });
 }
