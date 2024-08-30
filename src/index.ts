@@ -24,7 +24,7 @@ function startServer(_app : express.Application){
   });
   _app.listen(port, () => {
       console.log(`Server is running at  http://localhost:${THIS_APP_PORT}/`);
-      console.log(`example request http://localhost:${THIS_APP_PORT}/?th=[%22name%22,%22occupation%22]`);
+      console.log(`example request http://localhost:2000/?th=name&th=occupation&th=phonenumber`);
     });
 }
 
