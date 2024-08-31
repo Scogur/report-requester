@@ -1,9 +1,18 @@
-<p align="center">
-  <a>Report requester</a>
-</p>
-<p align="center">
-  <a>TS + Express</a>
-</p>
+## Description
+
+Report requester
+
+## Project setup
+
+```bash
+$ npm install
+```
+
+## Compile and run the project
+
+```bash
+$ npm run 
+```
 
 ## Example request
 
