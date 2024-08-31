@@ -50,7 +50,6 @@ async function sendRepRequest(req: RequestInfo) {
 }
 
 async function sendFileRequest(req: RequestInfo) {
-  console.log('sendFileRequest started');
   let data!: ArrayBuffer | string;
   await fetch(req)
     .then((response) => response.json())
